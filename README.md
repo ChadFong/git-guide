@@ -33,7 +33,8 @@ You should commit early and often, you can not have too many commits.  Ideally y
 
 ## A quick tangent to define a phrase or two
 #### `ref` is reference.  This can be a commit, a branch name, a tag, etc...
-#### `HEAD` is a ref that points to the currently checked out commit. Typically this is the tip of the current branch, but that is not always the case. `git reset` and `git checkout` move HEAD.
+#### `HEAD` is a ref that points to the currently checked out commit. Typically this is the tip of the current branch, but that is not always the case. `git reset` and `git checkout` move HEAD.  
+'detached HEAD' state simply means that HEAD is not pointing to the tip of a branch
 
 
 ## `git tag`: mark a commit to be accessed by a particular name, e.g., '1.0'
@@ -175,6 +176,17 @@ e.g.,
 ```
 This can be used to undo destructive actions taken on your local branch, or to recover dangling commits that lack a tag/branch/etc...  
 **Remember:** _The hash on the left references HEAD **AFTER** the action on the right was taken_
+
+## `git clean`: removes untracked files in repository
+`-d`: **d**irectory. Also remove untracked directories  
+`-n`: dry ru**n**. Run to see what git would remove without actually removing anything  
+`-f`: **f**orce. This flag **must** be included to run the clean operation unless you've changed your config
+
+e.g.,  
+`git clean -dn`: show me what files and directories you will delete  
+`git clean -df`: delete files and directories  
+
+**Important:** You should always run with the `-n` flag once before you go about wildly deleting things
 
 # Workflow
 1. Get latest from from origin develop `git checkout develop` `git pull --rebase origin develop`
