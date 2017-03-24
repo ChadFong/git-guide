@@ -30,7 +30,7 @@ Opens your [chosen editor](http://stackoverflow.com/questions/2596805/how-do-i-m
 
 ## A quick tangent to define a phrase or two
 #### `ref` is reference.  This can be a commit, a branch name, a tag, etc...
-#### `HEAD` is a ref that points to wherever it is you're looking. Typically this is the tip of the current branch, but that is not always the case.  See `git reset`.
+#### `HEAD` is a ref that points to wherever it is you're looking. Typically this is the tip of the current branch, but that is not always the case. `git reset` and `git checkout` move HEAD.
 
 
 ## `git tag`: mark a commit to be accessed by a particular name, e.g., '1.0'
@@ -47,8 +47,9 @@ A tag is like a branch that cannot be moved.  It is a ref to a commit hash.
 ## `git branch`: create a branch to append commits to
 `git branch <branch name>`  
 e.g., `git branch css-fix`  
-This creates a ref which points to a particular commit hash. Namely whichever commit you were on when you created the branch.
+This creates a ref which points to a particular commit hash. Namely whichever commit you were on when you created the branch.  
 **Important:** This command does not change you to your newly created branch.  See `git checkout` below
+**Important:** We do not do work directly on master, use this command or `git checkout -b <branch name>` explained below
 
 
 ## `git checkout`: change working directly to model previously made commit
@@ -59,7 +60,7 @@ e.g., `git checkout ef32eo` or `git checkout feat-branch`
 
 This command cannot be made with changes in your working directory.
 * If you do not want them anymore, run `git checkout -- .` to **permanently** discard these changes.
-.. * _You can also do this with the reset command, see below_
+  * _You can also do this with the reset command, see below_
 * If you do want them, commit them.
 * If you do want them, but not _that_ bad, run [`git stash`](https://git-scm.com/docs/git-stash)
 
@@ -92,25 +93,66 @@ It presents more information, cleaner, and in less space.
 `git show <commit hash/ref(branch name/tag/etc...)>`  
 
 
-## `git push`
+## `git push`: push local branch to remote git repository
+`git push <remote> <branch>`  
+e.g., `git push origin dev`  
+**Important:** Do not `~~git push~~`! Always specify all parameters for push/pull or you may end up in git hell. _You do not want to be there_.
 
 
-## `git pull`
+## `git pull`: pull remote branch to local git repository
+`git pull --rebase <remote> <branch>`  
+e.g., `git pull --rebase origin dev`  
+(`--rebase` is an option which puts any changes that only exist locally **after** any remote changes. This prevents local history from becoming different from remote's history. If the workflow is followed properly this shouldn't be necessary, and I _know_ that everyone will follow the workflow perfectly, right?)
+**Important:** Do not `~~git pull~~`! Always specify all parameters for push/pull or you may end up in git hell. _You do not want to be there_.
+
+## `git merge`: combine changes from two branches into one
+###### merge? Where we're going we don't need "merge"  
+`git merge <branch>`  
+merge the specified branch _onto_ the branch you currently have checked out.
+e.g.,
+```
+git checkout dev
+git merge css-hack
+```
+*We are not using merge in our workflow, this is just for reference*
+![This is why we don't merge](http://i.imgur.com/Owiji5N.png)
+
+## `git cherry-pick`: pick particular commits from another branch and play them onto current branch
+###### `git rebase` is more likely to be used by you in your time with git  
+`git cherry-pick <commit>...`
+cherry-pick puts the specified commits _onto_ the branch you currently have checked out.
+```
+git checkout big-feature
+git cherry-pick ef23t9e e67e2e...
+```
+Puts commits ef23t9e and e67e2e onto branch big-feature. You may want to use this if there is a fix to a bug on a different branch to get that change/those changes onto your current working branch.
+
+## `git rebase`: move a branch's root to a different place on the tree, 'rebase' it.  Cherry-pick all nodes on a branch to the specified location
+`git rebase <upstream> <branch>` or `git rebase <branch>`  
+The first option is syntactic sugar for:
+```
+git checkout <upstream>
+git rebase <branch>
+git checkout <branch>
+```
+either use that syntax or be sure to explicitly checkout your rebase target:
+```
+git checkout develop
+git rebase big-feature
+```
+If you prefer the latter it is recommended that you have you command prompt display your current git branch if a git repo is present.
 
 
-## `git merge`
 
 
-## `git cherry-pick`
 
-
-## `git rebase`
-
+# Workflow
+[ex](http://nvie.com/posts/a-successful-git-branching-model/)
 
 # Suggested Git Aliases: 
 
-## .gitconfig: 
-## `git config --global alias.<alias-name> <command>`
+## git
+`git config --global alias.<alias-name> <command>`  
 e.g., `git config --global alias.co checkout`  
 Or, modify the .gitconfig file directly:
 
