@@ -33,7 +33,7 @@ You should commit early and often, you can not have too many commits.  Ideally y
 
 ## A quick tangent to define a phrase or two
 #### `ref` is reference.  This can be a commit, a branch name, a tag, etc...
-#### `HEAD` is a ref that points to wherever it is you're looking. Typically this is the tip of the current branch, but that is not always the case. `git reset` and `git checkout` move HEAD.
+#### `HEAD` is a ref that points to the currently checked out commit. Typically this is the tip of the current branch, but that is not always the case. `git reset` and `git checkout` move HEAD.
 
 
 ## `git tag`: mark a commit to be accessed by a particular name, e.g., '1.0'
@@ -112,7 +112,7 @@ The latter command only needs to be done if the branch does not already exist at
 **Important:** Do not "~~git pull~~"! Always specify all parameters for push/pull or you may end up in git hell. _You do not want to be there_.
 
 ## `git merge`: combine changes from two branches into one
-###### merge? Where we're going we don't need "merge"  
+###### Merge? Where we're going we don't need "merge"  
 `git merge <branch>`  
 merge the specified branch _onto_ the branch you currently have checked out.
 e.g.,
@@ -157,18 +157,38 @@ At any point you can type `git rebase --abort` to pretend none of this ever happ
 
 Visual Studio has a good rebase tool.
 
+#### `git rebase -i`: interactive rebase
+This takes the same options as git rebase, however it will open a new window where you can choose to take/leave/squash commits.  Follow the onscreen directions.  
+This can be used as a faster cherry-pick if you want to take most of the commits in a branch.  
+This is also how you squash.  
+
+## `git reflog`: "ref log", not re-flog
+`git reflog`  
+###### Tool to get out of git-hell.  
+Shows all changes made to HEAD in reverse chronological order, each row is displayed as:  
+`<commit hash AFTER THE ACTION ON THE RIGHT WAS TAKEN> HEAD@{#} <action description>`
+e.g.,
+```
+8cc679a HEAD@{0} checkout moving from 1628937e98u79a61287eu98eyp13 to master
+620a698 HEAD@{1} commit: (add) .css file for trees
+...
+```
+This can be used to undo destructive actions taken on your local branch, or to recover dangling commits that lack a tag/branch/etc...  
+**Remember:** _The hash on the left references HEAD **AFTER** the action on the right was taken_
+
 # Workflow
 1. Get latest from from origin develop `git checkout develop` `git pull --rebase origin develop`
 2. Create a feature branch for your work item `git checkout -b <branch name>`
 3. Commit your work early and often. One commit per logical change.
-    * 'git add` to stage your changes
+    * `git add` to stage your changes
     * `git commit` to commit
 4. Repeat step 3. until work is complete.
 5. Re-pull latest onto develop `git checkout develop` `git pull --rebase origin develop`
-6. Rebase onto develop `git rebase develop <branch name>` (is is recommended to do this as you go as to save yourself from a huge merge at the end of the line. Visual Studio has a good rebase tool).
+6. Rebase onto develop `git rebase develop <branch name>` (is is recommended to do this as you go to save yourself from a huge merge at the end of the line. Visual Studio has a good rebase tool).
 7. Checkout your feature branch and push to origin:
     * `git checkout <branch-name>`
     * `git push origin <local-branch-name>:<remote-branch-name>` e.g., `git push origin css-tree-fix:css-tree-fix`
+        * If you have already pushed your branch once you can just do `git push origin <branch name>`
 8. Use Visual Studio Online to create a pull request
     * You can add commits locally and push again in order to update your PR.  No need to create a new code review
     * Reviewers can see you notes on each commit and follow your progression.
