@@ -161,18 +161,18 @@ Visual Studio has a good rebase tool.
 1. Get latest from from origin develop `git checkout develop` `git pull --rebase origin develop`
 2. Create a feature branch for your work item `git checkout -b <branch name>`
 3. Commit your work early and often. One commit per logical change.
-  * 'git add` to stage your changes
-  * `git commit` to commit
+    * 'git add` to stage your changes
+    * `git commit` to commit
 4. Repeat step 3. until work is complete.
 5. Re-pull latest onto develop `git checkout develop` `git pull --rebase origin develop`
 6. Rebase onto develop `git rebase develop <branch name>` (is is recommended to do this as you go as to save yourself from a huge merge at the end of the line. Visual Studio has a good rebase tool).
 7. Checkout your feature branch and push to origin:
-  * `git checkout <branch-name>`
-  * `git push origin <local-branch-name>:<remote-branch-name>` e.g., `git push origin css-tree-fix:css-tree-fix`
+    * `git checkout <branch-name>`
+    * `git push origin <local-branch-name>:<remote-branch-name>` e.g., `git push origin css-tree-fix:css-tree-fix`
 8. Use Visual Studio Online to create a pull request
-  * You can add commits locally and push again in order to update your PR.  No need to create a new code review
-  * Reviewers can see you notes on each commit and follow your progression.
-  * Provided you are rebased on the latest develop VSO will squash and merge for you automatically
+    * You can add commits locally and push again in order to update your PR.  No need to create a new code review
+    * Reviewers can see you notes on each commit and follow your progression.
+    * Provided you are rebased on the latest develop VSO will squash and merge for you automatically
   
 [Our model is based on this, though this uses merge --no-ff instead of squash.  A good read but don't confuse yourself needlessly.](http://nvie.com/posts/a-successful-git-branching-model/)
 
