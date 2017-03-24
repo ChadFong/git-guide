@@ -102,6 +102,7 @@ It presents more information, cleaner, and in less space.
 `git push <remote> <branch>` or `git push <remote> <local branch>:<remote branch>`  
 e.g., `git push origin dev` or `git push origin feature:feature`  
 The latter command only needs to be done if the branch does not already exist at the destination, otherwise just specifying the branch name is sufficient.  
+Pushing is one of the prime benefits of git.  You can have copies of your work off of your local machine.  In the event that you Blue Screen of Death, forget your laptop, or have any other computer-tragedy you can pull on a new machine without having lost anything!  
 **Important:** Do not "~~git push~~"! Always specify all parameters for push/pull or you may end up in git hell. _You do not want to be there_.
 
 
@@ -195,6 +196,7 @@ e.g.,
     * `git add` to stage your changes
     * `git commit` to commit
 4. Repeat step 3. until work is complete.
+    * `git push origin <branch>` occasionally to keep a copy of your work backed up
 5. Re-pull latest onto develop `git checkout develop` `git pull --rebase origin develop`
 6. Rebase onto develop `git rebase develop <branch name>` (is is recommended to do this as you go to save yourself from a huge merge at the end of the line. Visual Studio has a good rebase tool).
 7. Checkout your feature branch and push to origin:
