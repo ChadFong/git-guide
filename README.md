@@ -2,6 +2,8 @@
 
 The goal of this guide is to make you git literate.  [Be the friend in git.txt](https://xkcd.com/1597/)
 
+[This is an excellent tutorial and resource to visualize what is going on when you use all these commands](http://learngitbranching.js.org/)
+
 # Git Commands:
 
 ## `git status`: list files changed since last commit
